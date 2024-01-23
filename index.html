@@ -1,0 +1,143 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Site Y</title>
+</head>
+<style>
+  :root {
+    --color-bg: #69f7be;
+    --color-text-main: #000000;
+    --color-primary: #ffff00;
+    --wrapper-height: 87vh;
+    --image-max-width: 300px;
+    --image-margin: 3rem;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: #edeff2;
+    font-family: Verdana;
+  }
+
+  button a {
+    text-decoration: none;
+    color: black;
+  }
+
+  button a:visited {
+    color: black;
+  }
+
+  code {
+    font-family: Courier;
+  }
+
+  button,
+  input {
+    font-family: inherit;
+    font-size: 100%;
+    background: #ffffff;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    transition: 500ms;
+    margin-top: 1rem;
+  }
+
+  .wrapper {
+    min-height: var(--wrapper-height);
+    display: grid;
+    place-items: center;
+    margin: 0 1rem;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cookies {
+    min-height: max(40vh, 350px);
+    min-width: 50vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+<body>
+  <div class="wrapper">
+    <div class="content">
+      <div class="cookies">
+        <h1>Site Y</h1>
+        <p>Cookies:</p>
+        <code id="cookies">None</code>
+
+        <button>
+          <a href="site-x.html">Go to Site X</a>
+        </button>
+      </div>
+      <div class="instructions">
+        <p>
+          As this is Site Y as a top-level site, you should see two cookies on the page:
+        </p>
+        <ul>
+          <li><code>unpartitioned-cookie=456;</code></li>
+          <li><code>__Host-partitioned-cookie=123</code></li>
+        </ul>
+
+        <h3>Test the behavior with third-party cookies blocked</h3>
+        <ol>
+          <li>Use Chrome 118 or higher.</li>
+          <li>Set the <code>chrome://flags/#test-third-party-cookie-phaseout</code> flag and restart Chrome.</li>
+          <li>
+            When you here are on Site Y the unparitioned cookie is not in third-party context so it's not blocked and
+            you will see two cookies:
+            <ul>
+              <li><code>unpartitioned-cookie=456;</code></li>
+              <li><code>__Host-partitioned-cookie=123</code>.</li>
+            </ul>
+          </li>
+          <li>Click <strong>Go to Site X</strong></li>
+          <li>When you load this page in an iframe on Site X, you should only see one cookie in the Site Y iframe.
+            <ul>
+              <li>
+                <code>__Host-partitioned-cookie=123</code>
+              </li>
+            </ul>
+          </li>
+        </ol>
+
+        <h3>Clear cookies</h3>
+        To reset the demo, clear all cookies for the site:
+        <ol>
+          <li>In <strong>Application > Storage > Cookies ></strong></li>
+          <li>Right click on <code>https://example.com</code></li>
+          <li>Click <strong>Clear</strong></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  document.cookie =
+    "__Host-partitioned-cookie=123; Secure; Max-Age=84600; Path=/; SameSite=None; Partitioned;";
+  document.cookie =
+    "unpartitioned-cookie=456; Secure; Max-Age=84600; Path=/; SameSite=None;";
+
+  const output = document.getElementById("cookies");
+
+  output.textContent = `${document.cookie}`;
+</script>
+
+</html>
