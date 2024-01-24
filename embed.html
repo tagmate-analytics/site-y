@@ -86,6 +86,11 @@
     const output = document.getElementById("cookies");
 
     output.textContent = `${document.cookie}`;
+
+    window.parent.postMessage({
+      __cookie: document.cookie
+    }, "*");
+
   </script>
 
 </body>
